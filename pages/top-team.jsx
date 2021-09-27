@@ -8,7 +8,7 @@ export default function TeamBuild() {
         <title>Genshin Build | Popular team</title>
         <link rel="icon" href="/icons/hutao.png" />
       </Head>
-      <Navbar activeNavbar="popular" />
+      <Navbar activeNavbar="topteam" />
     </div>
   );
 }

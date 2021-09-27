@@ -21,9 +21,9 @@ export default function Navbar(props) {
             active={activeNavbar === 'character'}
           />
           <MenuItem
-            title="Popular team"
-            href="/popular-team"
-            active={activeNavbar === 'popular'}
+            title="Top rated team"
+            href="/top-team"
+            active={activeNavbar === 'topteam'}
           />
           <MenuItem
             title="Find team"

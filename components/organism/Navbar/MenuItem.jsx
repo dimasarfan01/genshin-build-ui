@@ -1,5 +1,6 @@
 import Link from 'next/link';
 import cx from 'classnames';
+import Flip from 'react-reveal/Flip';
 
 export default function MenuItem(props) {
   const { title, active, href = '/', notList, icon } = props;
@@ -18,9 +19,16 @@ export default function MenuItem(props) {
       </Link>
     </div>
   ) : (
-    <li className="lg:flex hidden">
+    <li className="lg:flex hidden relative">
       <Link href={href}>
-        <a className={classTitle}>{title}</a>
+        <a>
+          <p className={classTitle}>{title}</p>
+          {active && (
+            <Flip left>
+              <span className="shadow-inner border-b-2 border-blue-200 border absolute -bottom-1 w-full rounded-md" />
+            </Flip>
+          )}
+        </a>
       </Link>
     </li>
   );

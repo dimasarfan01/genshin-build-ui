@@ -11,7 +11,8 @@
     "next": "latest",
     "rc-rate": "^2.9.1",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2"
+    "react-dom": "^17.0.2",
+    "react-reveal": "^1.2.2"
   },
   "devDependencies": {
     "autoprefixer": "^10.2.6",
