@@ -4,7 +4,19 @@ import MenuDropDown from './MenuDropDown';
 import MenuItem from './MenuItem';
 
 export default function Navbar(props) {
-  const { activeNavbar } = props;
+  const { activeNavbar, isCentered } = props;
+
+  if (isCentered) {
+    return (
+      <nav className="bg-gray-800 px-4 lg:px-10 h-20 w-full flex items-center justify-center border-b-2 border-gray-600">
+        <Link href="/">
+          <a>
+            <IconText />
+          </a>
+        </Link>
+      </nav>
+    );
+  }
   return (
     <nav className="bg-gray-800 px-4 lg:px-10 h-20 w-full flex items-center justify-between border-b-2 border-gray-600">
       <Link href="/">

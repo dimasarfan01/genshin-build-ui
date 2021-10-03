@@ -35,8 +35,8 @@ export default function MenuDropDown() {
               </Menu.Item>
               <Menu.Item>
                 <MenuItem
-                  title="Popular team"
-                  href="/"
+                  title="Top rated team"
+                  href="/top-team"
                   icon={
                     <PopularIcon className="w-5 h-5 mr-2" aria-hidden="true" />
                   }

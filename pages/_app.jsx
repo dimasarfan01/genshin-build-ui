@@ -1,5 +1,6 @@
 import 'tailwindcss/tailwind.css';
 import 'rc-rate/assets/index.css';
+import '../components/atoms/Loader/styles.css';
 import Head from 'next/head';
 
 function MyApp({ Component, pageProps }) {
