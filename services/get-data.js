@@ -31,3 +31,11 @@ export const getDataTeamCompByQueryAPI = async (page, query) => {
     method: 'GET',
   });
 };
+export const getDataUsersAPI = async (id, serverToken) => {
+  const url = `${ROOT_API}/${API_VERSION}/data-users/profile/${id}`;
+  return callAPI({
+    url,
+    method: 'GET',
+    serverToken: serverToken,
+  });
+};

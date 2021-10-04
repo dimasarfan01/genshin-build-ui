@@ -2,9 +2,10 @@ import Link from 'next/link';
 import IconText from '../../atoms/IconText';
 import MenuDropDown from './MenuDropDown';
 import MenuItem from './MenuItem';
+import AuthDropDown from './AuthDropDown';
 
 export default function Navbar(props) {
-  const { activeNavbar, isCentered } = props;
+  const { activeNavbar, isCentered, profile } = props;
 
   if (isCentered) {
     return (
@@ -24,7 +25,7 @@ export default function Navbar(props) {
           <IconText />
         </a>
       </Link>
-      <MenuDropDown />
+      <MenuDropDown profile={profile} />
       <div className="flex items-center space-x-4">
         <ul className="flex flex-row space-x-5 text-white">
           <MenuItem
@@ -50,14 +51,18 @@ export default function Navbar(props) {
             height: '2.50rem',
           }}
         />
-        <Link href="/sign-in">
-          <a
-            className="font-gemunu px-4 py-1 hidden lg:flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-400 text-white"
-            type="button"
-          >
-            Sign in
-          </a>
-        </Link>
+        {profile ? (
+          <AuthDropDown profile={profile} />
+        ) : (
+          <Link href="/sign-in">
+            <a
+              className="font-gemunu px-4 py-1 hidden lg:flex items-center justify-center rounded-full bg-blue-500 hover:bg-blue-400 text-white"
+              type="button"
+            >
+              Sign in
+            </a>
+          </Link>
+        )}
       </div>
     </nav>
   );

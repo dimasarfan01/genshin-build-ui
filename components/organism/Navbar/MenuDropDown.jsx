@@ -1,9 +1,15 @@
 import { Menu, Transition } from '@headlessui/react';
-import Link from 'next/link';
+import Cookies from 'js-cookie';
+import { useRouter } from 'next/dist/client/router';
 import { Fragment } from 'react';
 import MenuItem from './MenuItem';
 
-export default function MenuDropDown() {
+export default function MenuDropDown({ profile }) {
+  const router = useRouter();
+  const handleLogout = async () => {
+    Cookies.remove('token');
+    router.push('/');
+  };
   return (
     <div className="text-right absolute right-4 z-10 lg:hidden flex">
       <Menu as="div" className="relative inline-block text-left">
@@ -24,35 +30,63 @@ export default function MenuDropDown() {
           <Menu.Items className="absolute right-0 w-44 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-2 space-y-2">
               <Menu.Item>
-                <MenuItem
-                  title="Home"
-                  href="/"
-                  icon={
-                    <HomeIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-                  }
-                  notList
-                />
+                <MenuItem title="Home" href="/" notList>
+                  <HomeIcon
+                    className="w-5 h-5 mr-2 fill-current text-gray-400"
+                    aria-hidden="true"
+                  />
+                </MenuItem>
               </Menu.Item>
               <Menu.Item>
-                <MenuItem
-                  title="Top rated team"
-                  href="/top-team"
-                  icon={
-                    <PopularIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-                  }
-                  notList
-                />
+                <MenuItem title="Top rated team" href="/top-team" notList>
+                  <PopularIcon
+                    className="w-5 h-5 mr-2 fill-current text-gray-400"
+                    aria-hidden="true"
+                  />
+                </MenuItem>
               </Menu.Item>
               <Menu.Item>
-                <MenuItem
-                  title="Sign in"
-                  href="/sign-in"
-                  icon={
+                <MenuItem title="Find Team" href="/find-team" notList>
+                  <FindIcon
+                    className="w-5 h-5 mr-2 fill-current text-gray-500 border border-gray-500 rounded-full"
+                    aria-hidden="true"
+                  />
+                </MenuItem>
+              </Menu.Item>
+              <Menu.Item>
+                {profile ? (
+                  <MenuItem title="Profile" href="/profile" notList>
+                    <img
+                      src={
+                        profile.avatar === ''
+                          ? '/icons/hutao2.png'
+                          : profile.avatar
+                      }
+                      alt="avatar"
+                      className="w-5 h-5 mr-2 rounded-full"
+                    />
+                  </MenuItem>
+                ) : (
+                  <MenuItem title="Sign in" href="/sign-in" notList>
                     <LoginIcon className="w-5 h-5 mr-2" aria-hidden="true" />
-                  }
-                  notList
-                />
+                  </MenuItem>
+                )}
               </Menu.Item>
+              {profile && (
+                <Menu.Item>
+                  <MenuItem
+                    title="Log out"
+                    onClick={handleLogout}
+                    notList
+                    isButton
+                  >
+                    <LogoutIcon
+                      className="w-5 h-5 mr-2 fill-current text-white rounded-full bg-gray-500 p-1"
+                      aria-hidden="true"
+                    />
+                  </MenuItem>
+                </Menu.Item>
+              )}
             </div>
           </Menu.Items>
         </Transition>
@@ -70,7 +104,6 @@ function HomeIcon(props) {
       xmlns="http://www.w3.org/2000/svg"
     >
       <path
-        fill="#EDE9FE"
         stroke="gray"
         strokeLinecap="round"
         strokeLinejoin="round"
@@ -91,7 +124,6 @@ function PopularIcon(props) {
     >
       <path
         fillRule="evenodd"
-        fill="#EDE9FE"
         stroke="gray"
         d="M12.395 2.553a1 1 0 00-1.45-.385c-.345.23-.614.558-.822.88-.214.33-.403.713-.57 1.116-.334.804-.614 1.768-.84 2.734a31.365 31.365 0 00-.613 3.58 2.64 2.64 0 01-.945-1.067c-.328-.68-.398-1.534-.398-2.654A1 1 0 005.05 6.05 6.981 6.981 0 003 11a7 7 0 1011.95-4.95c-.592-.591-.98-.985-1.348-1.467-.363-.476-.724-1.063-1.207-2.03zM12.12 15.12A3 3 0 017 13s.879.5 2.5.5c0-1 .5-4 1.25-4.5.5 1 .786 1.293 1.371 1.879A2.99 2.99 0 0113 13a2.99 2.99 0 01-.879 2.121z"
         clipRule="evenodd"
@@ -110,7 +142,6 @@ function LoginIcon(props) {
     >
       <path
         fillRule="evenodd"
-        fill="#EDE9FE"
         stroke="gray"
         d="M18 8a6 6 0 01-7.743 5.743L10 14l-1 1-1 1H6v2H2v-4l4.257-4.257A6 6 0 1118 8zm-6-4a1 1 0 100 2 2 2 0 012 2 1 1 0 102 0 4 4 0 00-4-4z"
         clipRule="evenodd"
@@ -119,140 +150,27 @@ function LoginIcon(props) {
   );
 }
 
-function ArchiveInactiveIcon(props) {
+function FindIcon(props) {
   return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="8"
-        width="10"
-        height="8"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <path d="M9 9a2 2 0 114 0 2 2 0 01-4 0z" />
+      <path
+        fillRule="evenodd"
+        d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-13a4 4 0 00-3.446 6.032l-2.261 2.26a1 1 0 101.414 1.415l2.261-2.261A4 4 0 1011 5z"
+        clipRule="evenodd"
       />
-      <rect
-        x="4"
-        y="4"
-        width="12"
-        height="4"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
-      />
-      <path d="M8 12H12" stroke="#A78BFA" strokeWidth="2" />
     </svg>
   );
 }
 
-function ArchiveActiveIcon(props) {
+function LogoutIcon(props) {
   return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="8"
-        width="10"
-        height="8"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <path
+        fillRule="evenodd"
+        d="M3 3a1 1 0 00-1 1v12a1 1 0 102 0V4a1 1 0 00-1-1zm10.293 9.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L14.586 9H7a1 1 0 100 2h7.586l-1.293 1.293z"
+        clipRule="evenodd"
       />
-      <rect
-        x="4"
-        y="4"
-        width="12"
-        height="4"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <path d="M8 12H12" stroke="#A78BFA" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function MoveInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M10 4H16V10" stroke="#A78BFA" strokeWidth="2" />
-      <path d="M16 4L8 12" stroke="#A78BFA" strokeWidth="2" />
-      <path d="M8 6H4V16H14V12" stroke="#A78BFA" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function MoveActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <path d="M10 4H16V10" stroke="#C4B5FD" strokeWidth="2" />
-      <path d="M16 4L8 12" stroke="#C4B5FD" strokeWidth="2" />
-      <path d="M8 6H4V16H14V12" stroke="#C4B5FD" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function DeleteInactiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="6"
-        width="10"
-        height="10"
-        fill="#EDE9FE"
-        stroke="#A78BFA"
-        strokeWidth="2"
-      />
-      <path d="M3 6H17" stroke="#A78BFA" strokeWidth="2" />
-      <path d="M8 6V4H12V6" stroke="#A78BFA" strokeWidth="2" />
-    </svg>
-  );
-}
-
-function DeleteActiveIcon(props) {
-  return (
-    <svg
-      {...props}
-      viewBox="0 0 20 20"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-    >
-      <rect
-        x="5"
-        y="6"
-        width="10"
-        height="10"
-        fill="#8B5CF6"
-        stroke="#C4B5FD"
-        strokeWidth="2"
-      />
-      <path d="M3 6H17" stroke="#C4B5FD" strokeWidth="2" />
-      <path d="M8 6V4H12V6" stroke="#C4B5FD" strokeWidth="2" />
     </svg>
   );
 }

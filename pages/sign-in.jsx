@@ -16,3 +16,19 @@ export default function SignIn() {
     </div>
   );
 }
+
+export async function getServerSideProps({ req }) {
+  const { token } = req.cookies;
+
+  if (token) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
+  return {
+    props: {},
+  };
+}

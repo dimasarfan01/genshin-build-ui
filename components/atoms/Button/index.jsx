@@ -5,7 +5,7 @@ export default function Button({ text, roundedFull, onClick, isLink, href }) {
   const classTitle = cx({
     'rounded-lg': roundedFull ? false : true,
     'rounded-full': roundedFull ? true : false,
-    'flex font-gemunu px-4 py-1 items-center justify-center bg-blue-500 hover:bg-blue-400 text-white': true,
+    'flex font-gemunu px-4 py-1 items-center justify-center bg-blue-500 hover:bg-blue-400 text-white min-w-20': true,
   });
   const classLink = cx({
     'text-blue-500 hover:text-blue-300 hover:underline': true,
