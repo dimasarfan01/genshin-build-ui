@@ -3,11 +3,28 @@ import callAPI from '../config/api';
 const ROOT_API = process.env.NEXT_PUBLIC_API;
 const API_VERSION = 'api/v1';
 
-export const getDataCharactersAPI = async () => {
+export const getDataCharactersAPI = async (serverToken) => {
   const url = `${ROOT_API}/${API_VERSION}/data-characters`;
   return callAPI({
     url,
     method: 'GET',
+    serverToken: serverToken,
+  });
+};
+export const getDataArtifactsAPI = async (serverToken) => {
+  const url = `${ROOT_API}/${API_VERSION}/data-artifacts`;
+  return callAPI({
+    url,
+    method: 'GET',
+    serverToken: serverToken,
+  });
+};
+export const getDataWeaponAPI = async (serverToken) => {
+  const url = `${ROOT_API}/${API_VERSION}/data-weapon`;
+  return callAPI({
+    url,
+    method: 'GET',
+    serverToken: serverToken,
   });
 };
 export const getDataTeamCompAPI = async (page) => {

@@ -54,6 +54,14 @@ export default function MenuDropDown({ profile }) {
                 </MenuItem>
               </Menu.Item>
               <Menu.Item>
+                <MenuItem title="Build Team" href="/build-team" notList>
+                  <CreateIcon
+                    className="w-5 h-5 mr-2 fill-current text-gray-500 rounded-full"
+                    aria-hidden="true"
+                  />
+                </MenuItem>
+              </Menu.Item>
+              <Menu.Item>
                 {profile ? (
                   <MenuItem title="Profile" href="/profile" notList>
                     <img
@@ -92,6 +100,18 @@ export default function MenuDropDown({ profile }) {
         </Transition>
       </Menu>
     </div>
+  );
+}
+
+function CreateIcon(props) {
+  return (
+    <svg {...props} xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+      <path
+        fillRule="evenodd"
+        d="M10 2a1 1 0 00-1 1v1a1 1 0 002 0V3a1 1 0 00-1-1zM4 4h3a3 3 0 006 0h3a2 2 0 012 2v9a2 2 0 01-2 2H4a2 2 0 01-2-2V6a2 2 0 012-2zm2.5 7a1.5 1.5 0 100-3 1.5 1.5 0 000 3zm2.45 4a2.5 2.5 0 10-4.9 0h4.9zM12 9a1 1 0 100 2h3a1 1 0 100-2h-3zm-1 4a1 1 0 011-1h2a1 1 0 110 2h-2a1 1 0 01-1-1z"
+        clipRule="evenodd"
+      />
+    </svg>
   );
 }
 

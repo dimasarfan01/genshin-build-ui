@@ -1,10 +1,14 @@
+import jwtDecode from 'jwt-decode';
 import Head from 'next/head';
 import DetailSection from '../../components/organism/DetailSection';
 import Footer from '../../components/organism/Footer';
 import Navbar from '../../components/organism/Navbar';
-import { getDataTeamCompByIdAPI } from '../../services/get-data';
+import {
+  getDataTeamCompByIdAPI,
+  getDataUsersAPI,
+} from '../../services/get-data';
 
-export default function Details({ dataItem }) {
+export default function Details({ dataItem, dataProfile }) {
   return (
     <div>
       <Head>
@@ -14,20 +18,34 @@ export default function Details({ dataItem }) {
           href={`${process.env.NEXT_PUBLIC_API}${dataItem.Character1.imageUrl}`}
         />
       </Head>
-      <Navbar activeNavbar="character" />
+      <Navbar activeNavbar="character" profile={dataProfile} />
       <DetailSection dataItem={dataItem} />
       <Footer />
     </div>
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ req, params }) {
   const { id } = params;
-  const data = await getDataTeamCompByIdAPI(id);
+  const { token } = req.cookies;
 
+  const data = await getDataTeamCompByIdAPI(id);
+  if (token) {
+    const jwtToken = Buffer.from(token, 'base64').toString('ascii');
+    const payload = jwtDecode(jwtToken);
+    const userFromPayload = payload.user;
+    const response = await getDataUsersAPI(userFromPayload.id, jwtToken);
+    return {
+      props: {
+        dataItem: data.data,
+        dataProfile: response.data,
+      },
+    };
+  }
   return {
     props: {
       dataItem: data.data,
+      dataProfile: false,
     },
   };
 }

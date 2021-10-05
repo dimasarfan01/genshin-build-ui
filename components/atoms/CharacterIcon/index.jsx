@@ -7,13 +7,13 @@ export default function CharacterIcon(props) {
         <img
           src={`${ROOT_API}${icon}`}
           alt="thumbnail"
-          className="shadow-lg object-fit rounded-md w-8 max-w-xs bg-gray-700"
+          className="shadow-lg object-cover rounded-md w-8 max-w-xs bg-gray-700"
         />
       ) : (
         <img
           src={`${ROOT_API}${icon}`}
           alt="thumbnail"
-          className="shadow-lg object-fit rounded-md lg:w-20 w-16 bg-gray-700 lg:min-w-16 min-w-16"
+          className="shadow-lg object-contain rounded-lg lg:w-20 lg:h-20 w-16 h-16 bg-gray-700 lg:min-w-16 min-w-16 lg:min-h-20 min-h-16"
         />
       )}
       {name.length > 14 ? (
