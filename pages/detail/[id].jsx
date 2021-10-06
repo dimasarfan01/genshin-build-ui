@@ -19,7 +19,7 @@ export default function Details({ dataItem, dataProfile }) {
         />
       </Head>
       <Navbar activeNavbar="character" profile={dataProfile} />
-      <DetailSection dataItem={dataItem} />
+      <DetailSection dataItem={dataItem} profile={dataProfile} />
       <Footer />
     </div>
   );
@@ -30,6 +30,14 @@ export async function getServerSideProps({ req, params }) {
   const { token } = req.cookies;
 
   const data = await getDataTeamCompByIdAPI(id);
+  if (data.data === undefined || data.data === null || data.data.length === 0) {
+    return {
+      redirect: {
+        destination: '/',
+        permanent: false,
+      },
+    };
+  }
   if (token) {
     const jwtToken = Buffer.from(token, 'base64').toString('ascii');
     const payload = jwtDecode(jwtToken);

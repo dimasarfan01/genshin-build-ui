@@ -2,20 +2,19 @@ import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
 import Flip from 'react-reveal/Flip';
 import { toast } from 'react-toastify';
-import toBase64 from '../../../function/toBase64';
 import { setSignUp } from '../../../services/auth';
 import Button from '../../atoms/Button';
 
 export default function AvatarForm({ setNextForm }) {
   const router = useRouter();
   const [imgPreview, setImgPreview] = useState(null);
-  const [image, setImage] = useState('');
-
+  const [imager, setImager] = useState('');
+  console.log(imager);
   const handleSubmit = async () => {
     const getLocalForm = localStorage.getItem('user-form');
     const form = JSON.parse(getLocalForm);
     const data = new FormData();
-    data.append('avatar', image);
+    data.append('avatar', imager);
     data.append('email', form.email);
     data.append('password', form.password);
     data.append('username', form.username);
@@ -46,7 +45,11 @@ export default function AvatarForm({ setNextForm }) {
             onChange={async (e) => {
               const img = e.target.files[0];
               setImgPreview(URL.createObjectURL(img) || null);
-              return setImage(await toBase64(img));
+              var reader = new FileReader();
+              reader.onloadend = function () {
+                return setImager(reader.result);
+              };
+              reader.readAsDataURL(img);
             }}
           />
           <p className="text-white">*Max image size 1 MB</p>

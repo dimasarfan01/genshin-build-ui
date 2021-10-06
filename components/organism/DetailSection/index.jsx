@@ -1,8 +1,14 @@
 import Rate from 'rc-rate';
 import CardData from './CardData';
 import Fade from 'react-reveal/Fade';
+import moment from 'moment';
+import Cookies from 'js-cookie';
+import { useEffect, useState } from 'react';
+import jwtDecode from 'jwt-decode';
+import IconButton from '../../atoms/IconButton';
 
 export default function DetailSection({ dataItem }) {
+  const [isCreator, setIsCreator] = useState(false);
   const {
     teamName,
     rating,
@@ -12,7 +18,26 @@ export default function DetailSection({ dataItem }) {
     Character4,
     desc,
     video,
+    creator,
+    createdAt,
+    updatedAt,
+    _id,
   } = dataItem;
+
+  useEffect(() => {
+    const token = Cookies.get('token');
+    if (token) {
+      const jwtToken = window.atob(`${token}`);
+      const payload = jwtDecode(jwtToken);
+      const userFromPayload = payload.user;
+      if (
+        userFromPayload.id === creator._id ||
+        userFromPayload.role === 'admin'
+      ) {
+        setIsCreator(true);
+      }
+    }
+  }, []);
   return (
     <section className="bg-gray-900 h-full w-full lg:p-4 py-4 px-1 min-h-screen">
       <div className="flex flex-col lg:mx-40 mx-0 bg-gray-800 p-2 rounded-md space-y-4">
@@ -21,13 +46,45 @@ export default function DetailSection({ dataItem }) {
           <Rate count={5} value={rating} allowHalf={true} disabled />
         </div>
         <hr />
+        {isCreator && (
+          <div className="flex justify-end">
+            <IconButton
+              text="Update"
+              href={`/update/${_id}`}
+              icon={<UpdateIcon />}
+            />
+          </div>
+        )}
+        <div className="flex flex-row bg-gray-900 justify-between min-h-16 items-center lg:px-4 lg:py-2 p-2 rounded-lg">
+          <div className="flex flex-row items-center space-x-2">
+            <img
+              src={creator.avatar === '' ? '/icons/hutao2.png' : creator.avatar}
+              alt="avatar"
+              className="w-10 h-10 rounded-full"
+            />
+            <p className="text-white">{creator.username}</p>
+          </div>
+          <div>
+            {createdAt === updatedAt ? (
+              <>
+                <p className="text-white text-xs text-right">Posted At</p>
+                <p className="text-white">{moment(createdAt).fromNow()}</p>
+              </>
+            ) : (
+              <>
+                <p className="text-white text-xs text-right">Updated At</p>
+                <p className="text-white">{moment(updatedAt).fromNow()}</p>
+              </>
+            )}
+          </div>
+        </div>
         <div className="grid grid-flow-row gap-2 lg:grid-cols-2">
           <CardData dataCharacter={Character1} number={1} />
           <CardData dataCharacter={Character2} number={2} />
           <CardData dataCharacter={Character3} number={3} />
           <CardData dataCharacter={Character4} number={4} />
         </div>
-        <Fade delay={300 * 5}>
+        <Fade>
           <div className="flex flex-col bg-gray-900 p-2 rounded-lg space-y-3">
             <p className="text-white text-center">{desc}</p>
             <div className="lg:h-96 h-48">
@@ -48,5 +105,23 @@ export default function DetailSection({ dataItem }) {
         </div>
       </div>
     </section>
+  );
+}
+
+function UpdateIcon() {
+  return (
+    <svg
+      xmlns="http://www.w3.org/2000/svg"
+      className="h-5 w-5 fill-current text-black"
+      viewBox="0 0 20 20"
+      fill="currentColor"
+    >
+      <path d="M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z" />
+      <path
+        fillRule="evenodd"
+        d="M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+        clipRule="evenodd"
+      />
+    </svg>
   );
 }

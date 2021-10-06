@@ -12,6 +12,8 @@ export default function BuildTeam({
   dataCharacters,
   dataArtifacts,
   dataWeapon,
+  dataId,
+  dataItem,
 }) {
   return (
     <div>
@@ -24,6 +26,8 @@ export default function BuildTeam({
         dataCharacters={dataCharacters}
         dataArtifacts={dataArtifacts}
         dataWeapon={dataWeapon}
+        dataId={dataId}
+        dataItem={dataItem}
       />
     </div>
   );
@@ -48,6 +52,8 @@ export async function getServerSideProps({ req }) {
   return {
     props: {
       dataCharacters: {},
+      dataId: undefined,
+      dataItem: undefined,
     },
   };
 }

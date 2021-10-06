@@ -1,4 +1,18 @@
-export default function Input({ type, text, placeholder, ...props }) {
+export default function Input({ type, text, placeholder, isDesc, ...props }) {
+  if (isDesc) {
+    return (
+      <div className="flex flex-col items-center min-w-full">
+        <p className="font-gemunu text-white text-2xl">{text}</p>
+        <textarea
+          rows="4"
+          cols="50"
+          placeholder={placeholder}
+          className="rounded-md w-11/12"
+          {...props}
+        />
+      </div>
+    );
+  }
   return (
     <div className="flex flex-col items-center min-w-full">
       <p className="font-gemunu text-white text-2xl">{text}</p>

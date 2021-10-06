@@ -1,7 +1,10 @@
 import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
-import { postDataTeamAPI } from '../../../services/post-data';
+import {
+  postDataTeamAPI,
+  updateDataTeamAPI,
+} from '../../../services/post-data';
 import AuthIcon from '../../atoms/AuthIcon';
 import Button from '../../atoms/Button';
 import Input from '../../atoms/Input';
@@ -14,49 +17,92 @@ export default function BuildSection({
   dataCharacters,
   dataArtifacts,
   dataWeapon,
+  dataItem,
+  dataId,
 }) {
   const router = useRouter();
+
   const findName = (id) => dataCharacters.findIndex((nama) => nama._id === id);
   const [form, setForm] = useState({
-    teamName: '',
-    video: '',
-    desc: '',
-    dataCharacter1: dataCharacters[0]._id,
-    dataWeapon1: dataWeapon[0]._id,
-    dataArtifact1_1: dataArtifacts[0]._id,
-    dataArtifact2_1: dataArtifacts[0]._id,
-    flower1: 'HP',
-    plume1: 'ATK',
-    sands1: 'ATK%',
-    goblet1: 'Hydro DMG%',
-    circlet1: 'CRIT Rate%',
-    dataCharacter2: dataCharacters[0]._id,
-    dataWeapon2: dataWeapon[0]._id,
-    dataArtifact1_2: dataArtifacts[0]._id,
-    dataArtifact2_2: dataArtifacts[0]._id,
-    flower2: 'HP',
-    plume2: 'ATK',
-    sands2: 'ATK%',
-    goblet2: 'Hydro DMG%',
-    circlet2: 'CRIT Rate%',
-    dataCharacter3: dataCharacters[0]._id,
-    dataWeapon3: dataWeapon[0]._id,
-    dataArtifact1_3: dataArtifacts[0]._id,
-    dataArtifact2_3: dataArtifacts[0]._id,
-    flower3: 'HP',
-    plume3: 'ATK',
-    sands3: 'ATK%',
-    goblet3: 'Hydro DMG%',
-    circlet3: 'CRIT Rate%',
-    dataCharacter4: dataCharacters[0]._id,
-    dataWeapon4: dataWeapon[0]._id,
-    dataArtifact1_4: dataArtifacts[0]._id,
-    dataArtifact2_4: dataArtifacts[0]._id,
-    flower4: 'HP',
-    plume4: 'ATK',
-    sands4: 'ATK%',
-    goblet4: 'Hydro DMG%',
-    circlet4: 'CRIT Rate%',
+    teamName: dataItem ? dataItem.teamName : '',
+    video: dataItem ? dataItem.video : '',
+    desc: dataItem ? dataItem.desc : '',
+    dataCharacter1: dataItem
+      ? dataItem.Character1.dataCharacter._id
+      : dataCharacters[0]._id,
+    dataWeapon1: dataItem
+      ? dataItem.Character1.dataWeapon._id
+      : dataWeapon[0]._id,
+    dataArtifact1_1: dataItem
+      ? dataItem.Character1.dataArtifact.artifact1._id
+      : dataArtifacts[0]._id,
+    dataArtifact2_1: dataItem
+      ? dataItem.Character1.dataArtifact.artifact2._id
+      : dataArtifacts[0]._id,
+    flower1: dataItem ? dataItem.Character1.dataArtifact.flower : 'HP',
+    plume1: dataItem ? dataItem.Character1.dataArtifact.plume : 'ATK',
+    sands1: dataItem ? dataItem.Character1.dataArtifact.sands : 'ATK%',
+    goblet1: dataItem ? dataItem.Character1.dataArtifact.goblet : 'Hydro DMG%',
+    circlet1: dataItem
+      ? dataItem.Character1.dataArtifact.circlet
+      : 'CRIT Rate%',
+    dataCharacter2: dataItem
+      ? dataItem.Character2.dataCharacter._id
+      : dataCharacters[0]._id,
+    dataWeapon2: dataItem
+      ? dataItem.Character2.dataWeapon._id
+      : dataWeapon[0]._id,
+    dataArtifact1_2: dataItem
+      ? dataItem.Character2.dataArtifact.artifact1._id
+      : dataArtifacts[0]._id,
+    dataArtifact2_2: dataItem
+      ? dataItem.Character2.dataArtifact.artifact2._id
+      : dataArtifacts[0]._id,
+    flower2: dataItem ? dataItem.Character2.dataArtifact.flower : 'HP',
+    plume2: dataItem ? dataItem.Character2.dataArtifact.plume : 'ATK',
+    sands2: dataItem ? dataItem.Character2.dataArtifact.sands : 'ATK%',
+    goblet2: dataItem ? dataItem.Character2.dataArtifact.goblet : 'Hydro DMG%',
+    circlet2: dataItem
+      ? dataItem.Character2.dataArtifact.circlet
+      : 'CRIT Rate%',
+    dataCharacter3: dataItem
+      ? dataItem.Character3.dataCharacter._id
+      : dataCharacters[0]._id,
+    dataWeapon3: dataItem
+      ? dataItem.Character3.dataWeapon._id
+      : dataWeapon[0]._id,
+    dataArtifact1_3: dataItem
+      ? dataItem.Character3.dataArtifact.artifact1._id
+      : dataArtifacts[0]._id,
+    dataArtifact2_3: dataItem
+      ? dataItem.Character3.dataArtifact.artifact2._id
+      : dataArtifacts[0]._id,
+    flower3: dataItem ? dataItem.Character3.dataArtifact.flower : 'HP',
+    plume3: dataItem ? dataItem.Character3.dataArtifact.plume : 'ATK',
+    sands3: dataItem ? dataItem.Character3.dataArtifact.sands : 'ATK%',
+    goblet3: dataItem ? dataItem.Character3.dataArtifact.goblet : 'Hydro DMG%',
+    circlet3: dataItem
+      ? dataItem.Character1.dataArtifact.circlet
+      : 'CRIT Rate%',
+    dataCharacter4: dataItem
+      ? dataItem.Character4.dataCharacter._id
+      : dataCharacters[0]._id,
+    dataWeapon4: dataItem
+      ? dataItem.Character4.dataWeapon._id
+      : dataWeapon[0]._id,
+    dataArtifact1_4: dataItem
+      ? dataItem.Character4.dataArtifact.artifact1._id
+      : dataArtifacts[0]._id,
+    dataArtifact2_4: dataItem
+      ? dataItem.Character4.dataArtifact.artifact2._id
+      : dataArtifacts[0]._id,
+    flower4: dataItem ? dataItem.Character4.dataArtifact.flower : 'HP',
+    plume4: dataItem ? dataItem.Character4.dataArtifact.plume : 'ATK',
+    sands4: dataItem ? dataItem.Character4.dataArtifact.sands : 'ATK%',
+    goblet4: dataItem ? dataItem.Character4.dataArtifact.goblet : 'Hydro DMG%',
+    circlet4: dataItem
+      ? dataItem.Character1.dataArtifact.circlet
+      : 'CRIT Rate%',
   });
   const nameCharacter1 =
     dataCharacters[findName(form.dataCharacter1)].nameCharacter.toLowerCase();
@@ -112,11 +158,21 @@ export default function BuildSection({
     data.append('circlet4', form.circlet4);
     data.append('video', form.video);
     data.append('desc', form.desc);
-    const result = await postDataTeamAPI(data);
-    if (result.error) toast.error(result.message);
-    else {
-      toast.success('Build Team Success!');
-      router.push('/');
+
+    if (dataId === undefined) {
+      const result = await postDataTeamAPI(data);
+      if (result.error) toast.error(result.message);
+      else {
+        toast.success('Build Team Success!');
+        router.push('/');
+      }
+    } else {
+      const result = await updateDataTeamAPI(dataId, data);
+      if (result.error) toast.error(result.message);
+      else {
+        toast.success('Update Team Success!');
+        router.push(`/detail/${dataId}`);
+      }
     }
   };
   return (
@@ -159,7 +215,22 @@ export default function BuildSection({
             form={form}
             setForm={setForm}
           />
-          <Button text="Submit" onClick={handleSubmit} />
+          <Input
+            text="Description"
+            type="desc"
+            placeholder="Enter your description"
+            value={form.desc}
+            onChange={(e) => setForm({ ...form, desc: e.target.value })}
+            isDesc
+          />
+          <Input
+            text="Embed Youtube Video"
+            type="name"
+            placeholder="example: https://www.youtube.com/embed/6G7ETEx8I7U"
+            value={form.video}
+            onChange={(e) => setForm({ ...form, video: e.target.value })}
+          />
+          <Button text={dataId ? 'Update' : 'Submit'} onClick={handleSubmit} />
         </div>
       </div>
     </section>

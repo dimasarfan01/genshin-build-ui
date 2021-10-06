@@ -12,3 +12,12 @@ export const postDataTeamAPI = async (data) => {
     token: true,
   });
 };
+export const updateDataTeamAPI = async (id, data) => {
+  const url = `${ROOT_API}/${API_VERSION}/data-team/update/${id}`;
+  return callAPI({
+    url,
+    method: 'PUT',
+    data,
+    token: true,
+  });
+};

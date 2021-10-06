@@ -34,6 +34,13 @@ export const getDataTeamCompAPI = async (page) => {
     method: 'GET',
   });
 };
+export const getDataTeamCompOnlyIdAPI = async () => {
+  const url = `${ROOT_API}/${API_VERSION}/data-team/onlyid`;
+  return callAPI({
+    url,
+    method: 'GET',
+  });
+};
 export const getDataTeamCompByIdAPI = async (id) => {
   const url = `${ROOT_API}/${API_VERSION}/data-team/details/${id}`;
   return callAPI({
