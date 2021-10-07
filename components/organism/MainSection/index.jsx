@@ -1,12 +1,15 @@
 import CardBuild from '../../molecules/CardBuild';
 import CharacterIcon from '../../atoms/CharacterIcon';
 import { useEffect, useState } from 'react';
-import { getDataTeamCompAPI } from '../../../services/get-data';
+import {
+  getDataTeamCompAPI,
+  getDataTeamCompTopRatedAPI,
+} from '../../../services/get-data';
 import Fade from 'react-reveal/Fade';
 import Loader from '../../atoms/Loader';
 import Pagination from '../../atoms/Pagination';
 
-export default function MainSection() {
+export default function MainSection({ isTopRated }) {
   const [getDataTeamComp, setGetDataTeamComp] = useState([]);
   const [numberOfPages, setNumberOfPages] = useState(1);
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,7 +18,11 @@ export default function MainSection() {
   useEffect(() => {
     const getDataTeamCompList = async (page) => {
       setLoading(true);
-      const data = await getDataTeamCompAPI(page);
+
+      const data = isTopRated
+        ? await getDataTeamCompTopRatedAPI(page)
+        : await getDataTeamCompAPI(page);
+
       setGetDataTeamComp(data.data.data);
       setNumberOfPages(data.data.numberOfPages);
       setCurrentPage(data.data.currentPage);
@@ -31,20 +38,35 @@ export default function MainSection() {
     if (!loading) return setPages(pages - 1);
     return null;
   };
+
   return (
     <div className="bg-gray-900 h-full w-full p-4 min-h-screen">
       {loading ? (
         <div className="flex justify-center">
           <Loader />
         </div>
+      ) : getDataTeamComp.length === 0 ? (
+        <div className="flex justify-center">
+          <div className="bg-gray-800 flex flex-col p-2 rounded-lg items-center w-64 h-auto">
+            <p className="text-white">Not Data yet</p>
+            <img src="/icons/hutao3.png" alt="notfound-icon" className="w-20" />
+          </div>
+        </div>
       ) : (
         <div className="grid grid-flow-row gap-4 lg:grid-cols-3">
           {getDataTeamComp.map((item, index) => {
+            const reducer = (previousValue, currentValue) =>
+              previousValue + currentValue;
+            const ratingValue =
+              item.rating.length === 0
+                ? 0
+                : item.rating.map((item) => item.value).reduce(reducer) /
+                  item.rating.length;
             return (
               <Fade key={`${item._id}-${index}`} delay={300 * index}>
                 <CardBuild
                   title={item.teamName}
-                  rating={item.rating}
+                  rating={ratingValue}
                   href={`/detail/${item._id}`}
                 >
                   <CharacterIcon

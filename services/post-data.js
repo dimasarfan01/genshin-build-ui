@@ -21,3 +21,12 @@ export const updateDataTeamAPI = async (id, data) => {
     token: true,
   });
 };
+export const postRatingDataTeamAPI = async (id, data) => {
+  const url = `${ROOT_API}/${API_VERSION}/data-team/rating/${id}`;
+  return callAPI({
+    url,
+    method: 'PATCH',
+    data,
+    token: true,
+  });
+};

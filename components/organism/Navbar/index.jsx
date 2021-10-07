@@ -47,7 +47,7 @@ export default function Navbar(props) {
         <div
           className="lg:block hidden"
           style={{
-            borderLeft: '2px solid lightblue',
+            borderRight: '2px solid lightblue',
             height: '2.50rem',
           }}
         />

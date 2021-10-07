@@ -9,7 +9,6 @@ export default function AvatarForm({ setNextForm }) {
   const router = useRouter();
   const [imgPreview, setImgPreview] = useState(null);
   const [imager, setImager] = useState('');
-  console.log(imager);
   const handleSubmit = async () => {
     const getLocalForm = localStorage.getItem('user-form');
     const form = JSON.parse(getLocalForm);

@@ -34,6 +34,13 @@ export const getDataTeamCompAPI = async (page) => {
     method: 'GET',
   });
 };
+export const getDataTeamCompTopRatedAPI = async (page) => {
+  const url = `${ROOT_API}/${API_VERSION}/data-team/toprated?page=${page}`;
+  return callAPI({
+    url,
+    method: 'GET',
+  });
+};
 export const getDataTeamCompOnlyIdAPI = async () => {
   const url = `${ROOT_API}/${API_VERSION}/data-team/onlyid`;
   return callAPI({
@@ -55,11 +62,10 @@ export const getDataTeamCompByQueryAPI = async (page, query) => {
     method: 'GET',
   });
 };
-export const getDataUsersAPI = async (id, serverToken) => {
+export const getDataUsersAPI = async (id) => {
   const url = `${ROOT_API}/${API_VERSION}/data-users/profile/${id}`;
   return callAPI({
     url,
     method: 'GET',
-    serverToken: serverToken,
   });
 };

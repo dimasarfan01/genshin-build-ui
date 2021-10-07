@@ -6,9 +6,12 @@ import Cookies from 'js-cookie';
 import { useEffect, useState } from 'react';
 import jwtDecode from 'jwt-decode';
 import IconButton from '../../atoms/IconButton';
+import { postRatingDataTeamAPI } from '../../../services/post-data';
+import { toast } from 'react-toastify';
+import Button from '../../atoms/Button';
+import { useRouter } from 'next/router';
 
-export default function DetailSection({ dataItem }) {
-  const [isCreator, setIsCreator] = useState(false);
+export default function DetailSection({ dataItem, dataId }) {
   const {
     teamName,
     rating,
@@ -23,13 +26,38 @@ export default function DetailSection({ dataItem }) {
     updatedAt,
     _id,
   } = dataItem;
+  const router = useRouter();
+  const [myCurrentRating, setMyCurrentRating] = useState(0);
+  const [isCreator, setIsCreator] = useState(false);
+  const [isUserExist, setIsUserExist] = useState(false);
+  const reducer = (previousValue, currentValue) => previousValue + currentValue;
 
+  const ratingValue =
+    rating.length === 0
+      ? 0
+      : rating.map((item) => item.value).reduce(reducer) / rating.length;
+
+  const handleSubmit = async () => {
+    const data = new FormData();
+    data.append('value', myCurrentRating);
+    const result = await postRatingDataTeamAPI(dataId, data);
+    if (result?.error) toast.error(result.message);
+    else {
+      toast.success(result.data);
+      router.reload();
+    }
+  };
   useEffect(() => {
     const token = Cookies.get('token');
     if (token) {
+      setIsUserExist(true);
       const jwtToken = window.atob(`${token}`);
       const payload = jwtDecode(jwtToken);
       const userFromPayload = payload.user;
+      const findId = rating.findIndex(
+        (val) => val._id.toString() === userFromPayload.id
+      );
+      setMyCurrentRating(findId === -1 ? 0 : rating[findId].value);
       if (
         userFromPayload.id === creator._id ||
         userFromPayload.role === 'admin'
@@ -43,26 +71,57 @@ export default function DetailSection({ dataItem }) {
       <div className="flex flex-col lg:mx-40 mx-0 bg-gray-800 p-2 rounded-md space-y-4">
         <div className="flex flex-row justify-between pt-2">
           <h1 className="text-white font-mono text-lg pl-1">{teamName}</h1>
-          <Rate count={5} value={rating} allowHalf={true} disabled />
+          <div className="flex flex-row items-center">
+            <Rate
+              count={5}
+              defaultValue={0}
+              value={ratingValue}
+              allowHalf={true}
+              disabled
+            />
+            <p className="text-white text-sm">
+              <span className="text-yellow-400">{ratingValue}</span>
+              {rating.length} {rating.length > 1 ? 'users' : 'user'}
+            </p>
+          </div>
         </div>
         <hr />
-        {isCreator && (
-          <div className="flex justify-end">
-            <IconButton
-              text="Update"
-              href={`/update/${_id}`}
-              icon={<UpdateIcon />}
-            />
+        {isUserExist && (
+          <div className="flex justify-between flex-row items-center">
+            <div className="bg-gray-900 p-2 rounded-lg flex flex-row">
+              <div className="flex flex-col">
+                <p className="text-white font-gemunu text-md">
+                  Rate this build
+                </p>
+                <Rate
+                  count={5}
+                  value={myCurrentRating}
+                  allowHalf={true}
+                  onChange={(value) => setMyCurrentRating(value)}
+                />
+              </div>
+              <Button text="Submit" onClick={handleSubmit} />
+            </div>
+            {isCreator && (
+              <IconButton
+                text="Update"
+                href={`/update/${_id}`}
+                icon={<UpdateIcon />}
+              />
+            )}
           </div>
         )}
         <div className="flex flex-row bg-gray-900 justify-between min-h-16 items-center lg:px-4 lg:py-2 p-2 rounded-lg">
-          <div className="flex flex-row items-center space-x-2">
+          <div
+            className="flex flex-row items-center space-x-2 cursor-pointer "
+            onClick={() => router.push(`/profile/${creator._id}`)}
+          >
             <img
               src={creator.avatar === '' ? '/icons/hutao2.png' : creator.avatar}
               alt="avatar"
               className="w-10 h-10 rounded-full"
             />
-            <p className="text-white">{creator.username}</p>
+            <p className="text-white hover:underline">{creator.username}</p>
           </div>
           <div>
             {createdAt === updatedAt ? (
@@ -87,22 +146,24 @@ export default function DetailSection({ dataItem }) {
         <Fade>
           <div className="flex flex-col bg-gray-900 p-2 rounded-lg space-y-3">
             <p className="text-white text-center">{desc}</p>
-            <div className="lg:h-96 h-48">
-              <iframe
-                height="100%"
-                width="100%"
-                src={video}
-                title="YouTube video player"
-                frameBorder="0"
-                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-                allowFullScreen
-              />
-            </div>
+            {video === '' ? null : (
+              <div className="lg:h-96 h-48">
+                <iframe
+                  height="100%"
+                  width="100%"
+                  src={video}
+                  title="YouTube video player"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                />
+              </div>
+            )}
           </div>
         </Fade>
-        <div className="flex flex-col bg-gray-900 p-2 rounded-lg space-y-3">
+        {/* <div className="flex flex-col bg-gray-900 p-2 rounded-lg space-y-3">
           <p className="text-white">Review this build</p>
-        </div>
+        </div> */}
       </div>
     </section>
   );

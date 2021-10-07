@@ -1,5 +1,7 @@
 import jwtDecode from 'jwt-decode';
 import Head from 'next/head';
+import Footer from '../components/organism/Footer';
+import MainSection from '../components/organism/MainSection';
 import Navbar from '../components/organism/Navbar';
 import { getDataUsersAPI } from '../services/get-data';
 
@@ -11,6 +13,8 @@ export default function TeamBuild({ dataProfile }) {
         <link rel="icon" href="/icons/hutao.png" />
       </Head>
       <Navbar activeNavbar="topteam" profile={dataProfile} />
+      <MainSection isTopRated />
+      <Footer />
     </div>
   );
 }

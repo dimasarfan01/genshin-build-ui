@@ -8,7 +8,7 @@ import {
   getDataUsersAPI,
 } from '../../services/get-data';
 
-export default function Details({ dataItem, dataProfile }) {
+export default function Details({ dataItem, dataProfile, dataId }) {
   return (
     <div>
       <Head>
@@ -19,7 +19,11 @@ export default function Details({ dataItem, dataProfile }) {
         />
       </Head>
       <Navbar activeNavbar="character" profile={dataProfile} />
-      <DetailSection dataItem={dataItem} profile={dataProfile} />
+      <DetailSection
+        dataItem={dataItem}
+        profile={dataProfile}
+        dataId={dataId}
+      />
       <Footer />
     </div>
   );
@@ -47,6 +51,7 @@ export async function getServerSideProps({ req, params }) {
       props: {
         dataItem: data.data,
         dataProfile: response.data,
+        dataId: id,
       },
     };
   }
@@ -54,6 +59,7 @@ export async function getServerSideProps({ req, params }) {
     props: {
       dataItem: data.data,
       dataProfile: false,
+      dataId: false,
     },
   };
 }

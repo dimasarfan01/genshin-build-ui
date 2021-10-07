@@ -178,7 +178,7 @@ export default function BuildSection({
   return (
     <section className="h-auto w-full min-h-screen bg-gray-900 justify-center flex p-4">
       <div className="flex flex-col items-center lg:w-5/12 w-full bg-gray-800 rounded-xl shadow-xlsignin">
-        <AuthIcon text="Build Team" />
+        <AuthIcon text={dataId ? 'Update Team' : 'Build Team'} />
         <div className="flex flex-col w-full items-center my-4 space-y-4">
           <Input
             text="Team Name"

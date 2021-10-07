@@ -1,4 +1,3 @@
-import jwtDecode from 'jwt-decode';
 import Head from 'next/head';
 import BuildSection from '../components/organism/BuildSection';
 import Navbar from '../components/organism/Navbar';

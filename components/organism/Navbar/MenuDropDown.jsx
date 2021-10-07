@@ -63,7 +63,11 @@ export default function MenuDropDown({ profile }) {
               </Menu.Item>
               <Menu.Item>
                 {profile ? (
-                  <MenuItem title="Profile" href="/profile" notList>
+                  <MenuItem
+                    title="Profile"
+                    href={`/profile/${profile._id}`}
+                    notList
+                  >
                     <img
                       src={
                         profile.avatar === ''

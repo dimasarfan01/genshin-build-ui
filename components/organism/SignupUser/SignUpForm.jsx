@@ -2,6 +2,7 @@ import Button from '../../atoms/Button';
 import Input from '../../atoms/Input';
 import Pulse from 'react-reveal/Pulse';
 import { useEffect, useState } from 'react';
+import { toast } from 'react-toastify';
 
 export default function SignUpForm({ setNextForm }) {
   const [formData, setFormData] = useState({
@@ -10,8 +11,16 @@ export default function SignUpForm({ setNextForm }) {
     password: '',
   });
   const handleSubmit = () => {
-    localStorage.setItem('user-form', JSON.stringify(formData));
-    setNextForm(true);
+    if (
+      formData.username === '' ||
+      formData.email === '' ||
+      formData.password === ''
+    ) {
+      toast.error('Please fill every data');
+    } else {
+      localStorage.setItem('user-form', JSON.stringify(formData));
+      setNextForm(true);
+    }
   };
   useEffect(() => {
     const getLocalForm = localStorage?.getItem('user-form');

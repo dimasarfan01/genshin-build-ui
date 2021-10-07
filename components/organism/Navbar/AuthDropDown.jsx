@@ -34,7 +34,11 @@ export default function AuthDropDown({ profile }) {
           <Menu.Items className="absolute right-0 w-44 mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none">
             <div className="px-1 py-2 space-y-2">
               <Menu.Item>
-                <MenuItem title="Profile" href="/profile" notList>
+                <MenuItem
+                  title="Profile"
+                  href={`/profile/${profile._id}`}
+                  notList
+                >
                   <img
                     src={
                       profile.avatar === ''
