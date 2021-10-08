@@ -12,9 +12,9 @@ It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-
 - find team
 ![gb-find](https://user-images.githubusercontent.com/77246142/136582008-90cd099a-4370-4a4f-ba45-900d3ff1669e.png)
 - sign-up
-![gb-signup](https://user-images.githubusercontent.com/77246142/136581949-3a986299-e460-41da-b247-084ffa79da60.png)
+![gb-signup](https://user-images.githubusercontent.com/77246142/136583346-0fb126ec-771b-44b9-8f26-eddb10e3d7b1.png)
 - sign-in
-![gb-signin](https://user-images.githubusercontent.com/77246142/136581973-cd6b7555-9198-4b0a-a98b-8a8240f276c4.png)
+![gb-signin](https://user-images.githubusercontent.com/77246142/136583422-59109e94-05e1-4f6f-9e3d-39be4a48afc8.png)
 - profile
 ![gb-profile](https://user-images.githubusercontent.com/77246142/136581981-69f214d7-43b2-4a08-b575-afddd9707c47.png)
 - update-profile
@@ -24,4 +24,4 @@ It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-
 - build-team
 ![gb-buildteam](https://user-images.githubusercontent.com/77246142/136581999-985e2331-28e2-4bc9-a3dc-a6d1bea4c3f6.png)
 - update-team
-![gb-update-item](https://user-images.githubusercontent.com/77246142/136582661-6b2cbe10-67f7-4b17-8701-1497ec066c01.png)
+![gb-update-item](https://user-images.githubusercontent.com/77246142/136583286-d4c0320a-d5b5-4173-b51a-5f2ab69680e0.png)
