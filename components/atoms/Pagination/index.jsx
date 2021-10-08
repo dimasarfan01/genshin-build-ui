@@ -1,6 +1,15 @@
 export default function Pagination(props) {
-  const { currentPage, numberOfPages, handleDecrement, handleIncrement } =
-    props;
+  const {
+    currentPage,
+    numberOfPages,
+    handleDecrement,
+    handleIncrement,
+    handleChangePage,
+  } = props;
+  let rows = [];
+  for (let index = 1; index <= currentPage; index++) {
+    rows.push(index);
+  }
   return (
     <div className="flex flex-row justify-center mt-8 mb-4">
       {currentPage === 1 ? (
@@ -19,12 +28,25 @@ export default function Pagination(props) {
           Previous
         </button>
       )}
-      <button
-        className="font-gemunu px-4 py-1 flex items-center justify-center bg-blue-900 text-white cursor-default"
-        disabled
-      >
-        Pages: {numberOfPages === 0 ? 0 : currentPage} / {numberOfPages}
-      </button>
+      <div className="flex flex-row items-center space-x-1 font-gemunu bg-blue-900 text-white px-4 cursor-default">
+        <p>Pages:</p>
+        <select
+          className={`font-gemunu bg-blue-900 text-white px-2 ${
+            numberOfPages === 0 && 'cursor-not-allowed'
+          }`}
+          value={currentPage}
+          onChange={handleChangePage}
+          disabled={numberOfPages === 0}
+        >
+          {rows.map((item, index) => {
+            return (
+              <option key={index} value={item}>
+                {numberOfPages === 0 ? 0 : item}
+              </option>
+            );
+          })}
+        </select>
+      </div>
       {currentPage === numberOfPages || numberOfPages === 0 ? (
         <button
           className="disabled:opacity-50 cursor-not-allowed font-gemunu px-7 py-1 flex items-center justify-center rounded-r-lg bg-blue-500 text-white"

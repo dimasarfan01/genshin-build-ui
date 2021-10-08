@@ -30,3 +30,13 @@ export const postRatingDataTeamAPI = async (id, data) => {
     token: true,
   });
 };
+
+export const updateMyUserDataAPI = async (id, data) => {
+  const url = `${ROOT_API}/${API_VERSION}/data-users/profile/${id}`;
+  return callAPI({
+    url,
+    method: 'PUT',
+    data,
+    token: true,
+  });
+};

@@ -79,9 +79,11 @@ export default function DetailSection({ dataItem, dataId }) {
               allowHalf={true}
               disabled
             />
-            <p className="text-white text-sm">
-              <span className="text-yellow-400">{ratingValue}</span>
-              {rating.length} {rating.length > 1 ? 'users' : 'user'}
+            <p className="text-white text-sm font-gemunu">
+              <span className="text-yellow-400 text-lg">
+                {ratingValue} &nbsp;
+              </span>
+              ({rating.length} {rating.length > 1 ? 'users' : 'user'})
             </p>
           </div>
         </div>

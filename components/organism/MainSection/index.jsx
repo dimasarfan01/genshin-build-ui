@@ -15,6 +15,7 @@ export default function MainSection({ isTopRated }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [loading, setLoading] = useState(true);
+
   useEffect(() => {
     const getDataTeamCompList = async (page) => {
       setLoading(true);
@@ -26,6 +27,7 @@ export default function MainSection({ isTopRated }) {
       setGetDataTeamComp(data.data.data);
       setNumberOfPages(data.data.numberOfPages);
       setCurrentPage(data.data.currentPage);
+
       setLoading(false);
     };
     getDataTeamCompList(pages);

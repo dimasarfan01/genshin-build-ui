@@ -69,3 +69,11 @@ export const getDataUsersAPI = async (id) => {
     method: 'GET',
   });
 };
+export const getMyUserDataAPI = async (id, serverToken) => {
+  const url = `${ROOT_API}/${API_VERSION}/data-users/myprofile/${id}`;
+  return callAPI({
+    url,
+    method: 'GET',
+    serverToken: serverToken,
+  });
+};

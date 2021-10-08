@@ -1,9 +1,15 @@
+import jwtDecode from 'jwt-decode';
 import Head from 'next/head';
 import Navbar from '../../components/organism/Navbar';
 import ProfileSection from '../../components/organism/PorfileSection';
-import { getDataUsersAPI } from '../../services/get-data';
+import { getDataUsersAPI, getMyUserDataAPI } from '../../services/get-data';
 
-export default function Profile({ dataProfile, paramsId }) {
+export default function Profile({
+  dataProfile,
+  paramsId,
+  myDataProfile,
+  currentUser,
+}) {
   return (
     <div>
       <Head>
@@ -11,13 +17,19 @@ export default function Profile({ dataProfile, paramsId }) {
         <link rel="icon" href="/icons/qiqi2.png" />
       </Head>
       <Navbar isCentered />
-      <ProfileSection dataProfile={dataProfile} paramsId={paramsId} />
+      <ProfileSection
+        dataProfile={dataProfile}
+        paramsId={paramsId}
+        myDataProfile={myDataProfile}
+        currentUser={currentUser}
+      />
     </div>
   );
 }
 
-export async function getServerSideProps({ params }) {
+export async function getServerSideProps({ req, params }) {
   const { id } = params;
+  const { token } = req.cookies;
 
   const data = await getDataUsersAPI(id);
   if (data.data === undefined || data.data === null || data.data.length === 0) {
@@ -25,6 +37,20 @@ export async function getServerSideProps({ params }) {
       redirect: {
         destination: '/',
         permanent: false,
+      },
+    };
+  }
+  if (token) {
+    const jwtToken = Buffer.from(token, 'base64').toString('ascii');
+    const payload = jwtDecode(jwtToken);
+    const userFromPayload = payload.user;
+    const myData = await getMyUserDataAPI(id, jwtToken);
+    return {
+      props: {
+        myDataProfile: myData.data,
+        dataProfile: data.data,
+        paramsId: id,
+        currentUser: userFromPayload,
       },
     };
   }

@@ -1,14 +1,33 @@
 import Fade from 'react-reveal/Fade';
-import IconButton from '../../atoms/IconButton';
+import UpdateProfile from './UpdateProfile';
 
-export default function ProfileMenu({ dataProfile, show, paramsId, onClick }) {
+export default function ProfileMenu({
+  dataProfile,
+  show,
+  paramsId,
+  setUpdateMenu,
+  updateMenu,
+  myDataProfile,
+  currentUser,
+}) {
+  if (updateMenu) {
+    return (
+      show && (
+        <UpdateProfile
+          myDataProfile={myDataProfile}
+          setUpdateMenu={setUpdateMenu}
+          paramsId={paramsId}
+        />
+      )
+    );
+  }
   return (
     show && (
       <Fade>
-        {dataProfile._id === paramsId ? (
+        {currentUser.id === paramsId || currentUser.role === 'admin' ? (
           <div className="absolute top-4 right-0 z-10">
             <button
-              onClick={onClick}
+              onClick={() => setUpdateMenu(true)}
               className="items-center flex flex-row py-2 px-4 bg-blue-500 rounded-l-lg hover:shadow-xlcolored transition ease-in-out duration-300"
             >
               <span className="text-white font-gemunu">
