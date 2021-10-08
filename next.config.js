@@ -1,5 +1,5 @@
 module.exports = {
   images: {
-    domains: ['localhost:8080'],
+    domains: ['https://genshin-build-server.herokuapp.com'],
   },
 };
