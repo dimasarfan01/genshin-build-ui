@@ -58,6 +58,8 @@ export async function getServerSideProps({ req, params }) {
     props: {
       dataProfile: data.data,
       paramsId: id,
+      currentUser: false,
+      myDataProfile: false,
     },
   };
 }
