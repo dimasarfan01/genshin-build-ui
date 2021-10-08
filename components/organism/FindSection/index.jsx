@@ -22,10 +22,11 @@ export default function FindSection() {
       setGetDataTeamComp(data.data.data);
       setNumberOfPages(data.data.numberOfPages);
       setCurrentPage(data.data.currentPage);
-      setLoading(false);
+      setTimeout(() => setLoading(false), 1500);
     };
     getDataTeamCompList(pages, queries);
   }, [pages, queries]);
+
   const handleIncrement = async () => {
     if (!loading) return setPages(pages + 1);
     return null;

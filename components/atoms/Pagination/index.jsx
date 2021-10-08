@@ -37,7 +37,6 @@ export default function Pagination(props) {
           }`}
           value={value}
           onChange={onChange}
-          defaultValue={0}
           disabled={numberOfPages === 0}
         >
           {rows.map((item, index) => {
