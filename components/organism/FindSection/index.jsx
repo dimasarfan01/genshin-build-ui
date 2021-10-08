@@ -67,6 +67,8 @@ export default function FindSection() {
             numberOfPages={numberOfPages}
             handleIncrement={handleIncrement}
             handleDecrement={handleDecrement}
+            value={pages}
+            onChange={(e) => setPages(e.target.value)}
           />
         </div>
       </Fade>

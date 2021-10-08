@@ -1,6 +1,7 @@
 import { useRouter } from 'next/dist/client/router';
 import { useState } from 'react';
 import { toast } from 'react-toastify';
+import { deleteDataTeamCompAPI } from '../../../services/delete-data';
 import {
   postDataTeamAPI,
   updateDataTeamAPI,
@@ -175,6 +176,14 @@ export default function BuildSection({
       }
     }
   };
+  const handleDelete = async () => {
+    const result = await deleteDataTeamCompAPI(dataId);
+    if (result.error) toast.error(result.message);
+    else {
+      toast.success('Delete Team Success!');
+      router.push('/');
+    }
+  };
   return (
     <section className="h-auto w-full min-h-screen bg-gray-900 justify-center flex p-4">
       <div className="flex flex-col items-center lg:w-5/12 w-full bg-gray-800 rounded-xl shadow-xlsignin">
@@ -231,6 +240,7 @@ export default function BuildSection({
             onChange={(e) => setForm({ ...form, video: e.target.value })}
           />
           <Button text={dataId ? 'Update' : 'Submit'} onClick={handleSubmit} />
+          {dataId && <Button text={'Delete'} onClick={handleDelete} />}
         </div>
       </div>
     </section>

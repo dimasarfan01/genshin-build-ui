@@ -4,10 +4,11 @@ export default function Pagination(props) {
     numberOfPages,
     handleDecrement,
     handleIncrement,
-    handleChangePage,
+    onChange,
+    value,
   } = props;
   let rows = [];
-  for (let index = 1; index <= currentPage; index++) {
+  for (let index = 1; index <= numberOfPages; index++) {
     rows.push(index);
   }
   return (
@@ -34,8 +35,9 @@ export default function Pagination(props) {
           className={`font-gemunu bg-blue-900 text-white px-2 ${
             numberOfPages === 0 && 'cursor-not-allowed'
           }`}
-          value={currentPage}
-          onChange={handleChangePage}
+          value={value}
+          onChange={onChange}
+          defaultValue={0}
           disabled={numberOfPages === 0}
         >
           {rows.map((item, index) => {

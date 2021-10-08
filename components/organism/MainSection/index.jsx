@@ -65,7 +65,7 @@ export default function MainSection({ isTopRated }) {
                 : item.rating.map((item) => item.value).reduce(reducer) /
                   item.rating.length;
             return (
-              <Fade key={`${item._id}-${index}`} delay={300 * index}>
+              <Fade key={`${item._id}-${index}`} delay={50 * index}>
                 <CardBuild
                   title={item.teamName}
                   rating={ratingValue}
@@ -98,6 +98,8 @@ export default function MainSection({ isTopRated }) {
         numberOfPages={numberOfPages}
         handleIncrement={handleIncrement}
         handleDecrement={handleDecrement}
+        value={pages}
+        onChange={(e) => setPages(e.target.value)}
       />
     </div>
   );

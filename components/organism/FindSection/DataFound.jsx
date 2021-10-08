@@ -14,7 +14,7 @@ export default function DataFound({ getDataTeamComp }) {
             : item.rating.map((item) => item.value).reduce(reducer) /
               item.rating.length;
         return (
-          <Fade key={`${item._id}-${index}`} delay={300 * index}>
+          <Fade key={`${item._id}-${index}`} delay={50 * index}>
             <CardBuild
               isFindTeam
               title={item.teamName}

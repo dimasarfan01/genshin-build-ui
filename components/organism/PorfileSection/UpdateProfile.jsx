@@ -17,7 +17,9 @@ export default function UpdateProfile({
     password: '',
   });
   const router = useRouter();
-  const [imgPreview, setImgPreview] = useState(myDataProfile.avatar);
+  const [imgPreview, setImgPreview] = useState(
+    myDataProfile.avatar ? myDataProfile.avatar : null
+  );
   const [imager, setImager] = useState('');
   const handleSubmit = async () => {
     const data = new FormData();

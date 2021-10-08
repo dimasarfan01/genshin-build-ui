@@ -10,6 +10,7 @@ import { postRatingDataTeamAPI } from '../../../services/post-data';
 import { toast } from 'react-toastify';
 import Button from '../../atoms/Button';
 import { useRouter } from 'next/router';
+import { nFormatter } from '../../../function/numberFormatter';
 
 export default function DetailSection({ dataItem, dataId }) {
   const {
@@ -70,20 +71,27 @@ export default function DetailSection({ dataItem, dataId }) {
     <section className="bg-gray-900 h-full w-full lg:p-4 py-4 px-1 min-h-screen">
       <div className="flex flex-col lg:mx-40 mx-0 bg-gray-800 p-2 rounded-md space-y-4">
         <div className="flex flex-row justify-between pt-2">
-          <h1 className="text-white font-mono text-lg pl-1">{teamName}</h1>
-          <div className="flex flex-row items-center">
-            <Rate
-              count={5}
-              defaultValue={0}
-              value={ratingValue}
-              allowHalf={true}
-              disabled
-            />
-            <p className="text-white text-sm font-gemunu">
-              <span className="text-yellow-400 text-lg">
-                {ratingValue} &nbsp;
-              </span>
-              ({rating.length} {rating.length > 1 ? 'users' : 'user'})
+          <h1 className="text-white font-mono lg:text-lg text-sm pl-1 lg:w-auto w-36">
+            {teamName}
+          </h1>
+          <div className="flex flex-col">
+            <div className="flex flex-row items-center">
+              <Rate
+                count={5}
+                defaultValue={0}
+                value={ratingValue}
+                allowHalf={true}
+                disabled
+              />
+              <p className="text-yellow-400 lg:text-lg text-sm">
+                {ratingValue.toString().length > 3
+                  ? ratingValue.toString().slice(0, 4)
+                  : ratingValue}
+              </p>
+            </div>
+            <p className="text-white text-sm font-gemunu text-right">
+              ({nFormatter(Number(rating.length), 1)}{' '}
+              {rating.length > 1 ? 'users' : 'user'})
             </p>
           </div>
         </div>
