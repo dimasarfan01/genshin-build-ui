@@ -2,6 +2,9 @@
 
 - Next.js - FrontEnd Library JavaScript
 - Tailwind CSS - Css Framework
+- Express Js - Backend Library JavaScript
+- MongoDB - Database
+- Node Js - JavaScript runtime built
 
 It uses the new [`Just-in-Time Mode`](https://tailwindcss.com/docs/just-in-time-mode) for Tailwind CSS.
 
