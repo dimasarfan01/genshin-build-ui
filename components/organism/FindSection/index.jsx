@@ -14,17 +14,21 @@ export default function FindSection() {
   const [currentPage, setCurrentPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [queries, setQueries] = useState('');
-  const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const getDataTeamCompList = async (page, query) => {
       setLoading(true);
-      const data = await getDataTeamCompByQueryAPI(page, query);
-      setGetDataTeamComp(data.data.data);
-      setNumberOfPages(data.data.numberOfPages);
-      setCurrentPage(data.data.currentPage);
-      setTimeout(() => setLoading(false), 1500);
+      const response = await getDataTeamCompByQueryAPI(page, query);
+      return response.data;
     };
-    getDataTeamCompList(pages, queries);
+    getDataTeamCompList(pages, queries).then((data) => {
+      setGetDataTeamComp(data.data);
+      setNumberOfPages(data.numberOfPages);
+      setCurrentPage(data.currentPage);
+      setTimeout(() => {
+        setLoading(false);
+      }, 2000);
+    });
   }, [pages, queries]);
 
   const handleIncrement = async () => {
