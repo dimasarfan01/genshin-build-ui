@@ -17,7 +17,7 @@ export default function DataCharacter1({
   const Artifact2 =
     dataArtifacts[findData(form.dataArtifact2_1, dataArtifacts)];
   return (
-    <div className="w-11/12 lg:p-2 p-0 bg-gray-700 rounded-lg items-center flex flex-col">
+    <div className="w-11/12 p-2 bg-gray-700 rounded-lg items-center flex flex-col">
       <div className="w-full h-auto flex flex-row p-2 bg-gray-900 lg:rounded-lg rounded-t-lg space-x-2 justify-between">
         <CharacterIcon
           icon={Character.imageUrl}

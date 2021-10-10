@@ -53,14 +53,16 @@ export default function MenuDropDown({ profile }) {
                   />
                 </MenuItem>
               </Menu.Item>
-              <Menu.Item>
-                <MenuItem title="Build Team" href="/build-team" notList>
-                  <CreateIcon
-                    className="w-5 h-5 mr-2 fill-current text-gray-500 rounded-full"
-                    aria-hidden="true"
-                  />
-                </MenuItem>
-              </Menu.Item>
+              {profile && (
+                <Menu.Item>
+                  <MenuItem title="Build Team" href="/build-team" notList>
+                    <CreateIcon
+                      className="w-5 h-5 mr-2 fill-current text-gray-500 rounded-full"
+                      aria-hidden="true"
+                    />
+                  </MenuItem>
+                </Menu.Item>
+              )}
               <Menu.Item>
                 {profile ? (
                   <MenuItem

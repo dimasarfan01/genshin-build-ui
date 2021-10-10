@@ -13,6 +13,7 @@ export default function IconButton({ text, href, onClick, icon, noLink }) {
       </button>
     );
   }
+
   return (
     <Link href={href}>
       <a

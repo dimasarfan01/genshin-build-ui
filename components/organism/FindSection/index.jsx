@@ -7,6 +7,7 @@ import Loader from '../../atoms/Loader';
 import Pagination from '../../atoms/Pagination';
 import DataFound from './DataFound';
 import NoData from './NoData';
+import IconButton from '../../atoms/IconButton';
 
 export default function FindSection() {
   const [getDataTeamComp, setGetDataTeamComp] = useState([]);
@@ -15,8 +16,14 @@ export default function FindSection() {
   const [pages, setPages] = useState(1);
   const [queries, setQueries] = useState('');
   const [loading, setLoading] = useState(false);
+  const [waiting, setWaiting] = useState(true);
+
   useEffect(() => {
+    queries === '' && setWaiting(true);
+  }, [queries]);
+  const handleFind = () => {
     const getDataTeamCompList = async (page, query) => {
+      setWaiting(false);
       setLoading(true);
       const response = await getDataTeamCompByQueryAPI(page, query);
       return response.data;
@@ -27,10 +34,9 @@ export default function FindSection() {
       setCurrentPage(data.currentPage);
       setTimeout(() => {
         setLoading(false);
-      }, 2000);
+      }, 1000);
     });
-  }, [pages, queries]);
-
+  };
   const handleIncrement = async () => {
     if (!loading) return setPages(pages + 1);
     return null;
@@ -45,12 +51,13 @@ export default function FindSection() {
         <div className="flex flex-col items-center lg:w-5/12 w-full bg-gray-800 rounded-xl shadow-xlsignin">
           <AuthIcon text="Find Team" />
           <div className="flex flex-col w-full items-center mt-4 space-y-4">
-            <div className="w-full bg-gray-900 items-center py-4 shadow-xl">
+            <div className="bg-gray-900 py-4 shadow-xl w-full flex flex-col items-center">
               <Input
-                type="text"
                 placeholder="example: qiqi,mona,naruto,zorro or just qiqi"
                 value={queries}
                 onChange={(e) => setQueries(e.target.value)}
+                onClick={handleFind}
+                isFindQuery
               />
             </div>
             {loading ? (
@@ -59,10 +66,23 @@ export default function FindSection() {
               </div>
             ) : (
               <>
-                {getDataTeamComp.length === 0 ? (
-                  <NoData queries={queries} />
+                {waiting ? (
+                  <div className="flex justify-center flex-col bg-gray-900 lg:w-1/2 w-11/12 items-center rounded-lg py-2">
+                    <p className="text-white">i'm Waiting...</p>
+                    <img
+                      src="/icons/qiqi2.png"
+                      alt="notfound-icon"
+                      className="w-20"
+                    />
+                  </div>
                 ) : (
-                  <DataFound getDataTeamComp={getDataTeamComp} />
+                  <>
+                    {getDataTeamComp.length === 0 ? (
+                      <NoData queries={queries} />
+                    ) : (
+                      <DataFound getDataTeamComp={getDataTeamComp} />
+                    )}
+                  </>
                 )}
               </>
             )}
